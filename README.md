@@ -5,8 +5,8 @@ Author: Aishwarya Gouru
 
 # How to install Globus Connect Personal
 
-[Introduction] introduction to Globus Personal connect
-[how to install] How to install Globus Personal Connect
+[Introduction] (# introduction to Globus Personal connect)
+[how to install] (# How to install Globus Personal Connect)
 
 ### Introduction to Globus Connect Personal
 
@@ -23,7 +23,7 @@ Author: Aishwarya Gouru
 * If you are trying to access the website using organization information, then select the organization details from the drop-down menu.
 
 
-![img](https://i.imgur.com/gBUqkVY.png)
+![img](https://i.imgur.com/jgeG3de.png)
 
 
 * After choosing the organization and clicking enter, the page redirects to organization log in page.
@@ -32,11 +32,11 @@ Author: Aishwarya Gouru
 
 * When you click sign in, it validates the credentials and lets you in!
 
-IMAGE
+![img](https://i.imgur.com/mlX90px.png)
 
 If you are a windows user, then click “Download Globus for Windows” otherwise click on “show me other supported operating systems.”
 
-IMAGE
+![img](https://i.imgur.com/ggYPZW7.png)
 
 * As we are installing Globus directly from the website, then there shouldn’t be any problem.
 
@@ -44,25 +44,25 @@ IMAGE
 
 * If your system encounters any problem as such, click on “more info.”
 
-IMAGE
+![img](https://i.imgur.com/ro6mCVB.png)
 
 By clicking on ‘Run anyway’ the system starts downloading the application.
 
-IMAGE
+![img](https://i.imgur.com/gBUqkVY.png)
 
 * After the application is installed, the setting up page sets up the application for the user.
 
 * By clicking finish, the application is successfully installed.
 
-IMAGE
+![img](https://i.imgur.com/c3yGYNU.png)
 
 After the successful installation of the application, the Globus Connect Personal Setup shows a pop-up to Log in to the system.
 
-IMAGE
+![img](https://i.imgur.com/aquGpkm.png)
 
 After Log-in, it provides a future reference name. If you would like to change the name, rename and click on the ‘Allow’ if you agree to the privacy policy and terms of service.
 
-IMAGE
+![img](https://i.imgur.com/314vDDb.png)
 
 * *This is the most important step when setting up the application for you*.
 
@@ -76,7 +76,7 @@ IMAGE
 
 * After all the fields are filled, click on save.
 
-IMAGE
+![img](https://i.imgur.com/AFD3e4o.png)
 
 * After you click on save, then this message pops up, “Setup successful.”
 
@@ -86,7 +86,7 @@ IMAGE
 
 * When the user clicks on exit setup, then it means, Globus personal is successfully connected and is set up on the personal computer for further use.
 
-IMAGE
+![img](https://i.imgur.com/Rv5NjsE.png)
 
 * This is the landing page if the user clicks on the links provided in the previous section.
 
@@ -94,15 +94,15 @@ IMAGE
 
 * Hence we need to change the default folder that only those files need to be shared with other users.
 
-IMAGE
+![img](https://i.imgur.com/qnbhTln.png)
 
 To change the default directory, on tool bar, check for the Globus “g” logo and right click on the logo button.
 
-IMAGE
+![img](https://i.imgur.com/DC39xAm.png)
 
 By right clicking on the logo, a list of different functions appear next to it. On the list, check for ‘options…’ and click on it.
 
-IMAGE
+![img](https://i.imgur.com/FV5teDy.png)
 
 * You may create a new folder for saving all the information relating related to Globus.
 
@@ -112,17 +112,17 @@ IMAGE
 
 * Beware – Just by setting up the default folder doesn’t remove the access to “documents” folder. Hence you need to remove the Documents folder.
 
-IMAGE
+![img](https://i.imgur.com/U7QTE0Y.png)
 
 *Note*: Remove the previous default folder by clicking on the folder and tapping on the (-) option. It will remove the folder from the accessible folder list.
 
-IMAGE
+![img](https://i.imgur.com/68OlVDz.png)
 
 * The path now is changes to the default path the user has specified.
 
 * All the files of that folder now being shared on Globus.
 
-IMAGE
+![img](https://i.imgur.com/WQouhAD.png)
 
 These are the steps involved in installing and setting up the Globus Connect Personal.
 
