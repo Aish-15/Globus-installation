@@ -5,8 +5,8 @@ Author: Aishwarya Gouru
 
 # How to install Globus Connect Personal
 
-[Introduction] (# introduction to Globus Personal connect)
-[how to install] (# How to install Globus Personal Connect)
+[Introduction](introduction to Globus Personal connect)
+[how to install](How to install Globus Personal Connect)
 
 ### Introduction to Globus Connect Personal
 
@@ -18,7 +18,7 @@ Author: Aishwarya Gouru
 
 ### How to Install Globus Personal Connect
 
-* Globus connect personel is the log in page where we can sign in using the university or organization log in details.
+* [Globus connect personel](https://tinyurl.com/a5zat3x3) is the log in page where we can sign in using the university or organization log in details.
 
 * If you are trying to access the website using organization information, then select the organization details from the drop-down menu.
 
@@ -64,15 +64,15 @@ After Log-in, it provides a future reference name. If you would like to change t
 
 ![img](https://i.imgur.com/314vDDb.png)
 
-* *This is the most important step when setting up the application for you*.
+* _This is the most important step when setting up the application for you_ .
 
 * Since we logged in using the organization log in details, it automatically assigns the owner identity to the registered email address.
 
-* *Collection Name*: This field allows the user to name their collection. It can be anything the user can identify the folder for later uses.
+* _*Collection Name*_ : This field allows the user to name their collection. It can be anything the user can identify the folder for later uses.
 
-* *Description*: The description helps the user to describe their collection.
+* _*Description*_ : The description helps the user to describe their collection.
 
-* *High Assurance*: Unless the user has access to sensitive information like patient records or something, kindly leave the field unchecked. If we click on the high assurance, then the user won't be able to share the information. Afterall, the application helps to exchange information between client and server.
+* _*High Assurance*_ : Unless the user has access to sensitive information like patient records or something, kindly leave the field unchecked. If we click on the high assurance, then the user won't be able to share the information. Afterall, the application helps to exchange information between client and server.
 
 * After all the fields are filled, click on save.
 
@@ -114,7 +114,11 @@ By right clicking on the logo, a list of different functions appear next to it. 
 
 ![img](https://i.imgur.com/U7QTE0Y.png)
 
-*Note*: Remove the previous default folder by clicking on the folder and tapping on the (-) option. It will remove the folder from the accessible folder list.
+* You may give access to the default folder as you wish. But it is preferred to select “writable” instead of  both “writable and sharable.”
+
+* You may click on “Save” to save these changes.
+
+_*Note*_ : Remove the previous default folder by clicking on the folder and tapping on the (-) option. It will remove the folder from the accessible folder list.
 
 ![img](https://i.imgur.com/68OlVDz.png)
 
@@ -129,4 +133,4 @@ These are the steps involved in installing and setting up the Globus Connect Per
 
 
 
-For FAQs: Click here
+For FAQs: [Click here](https://tinyurl.com/w36dwkfs)
