@@ -23,7 +23,7 @@ Author: Aishwarya Gouru
 * If you are trying to access the website using organization information, then select the organization details from the drop-down menu.
 
 
-feature-image: "https://imgur.com/a/DadIQg2"
+feature-img: "https://i.imgur.com/gBUqkVY.png"
 
 
 * After choosing the organization and clicking enter, the page redirects to organization log in page.
