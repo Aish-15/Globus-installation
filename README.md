@@ -1,136 +1,257 @@
+**[Technical Overview](#technical-overview)** |
+**[Installation](#installation)** |
+**[Configuration](#configuration)** |
+**[Docker](#docker)** |
+**[Contributing](#contributing)** |
+**[License](#license)** |
+**[Help and Resources](#help-and-resources)**
 
-Title: How to install Globus Connect Personal
-Author: Aishwarya Gouru
+# [JupyterHub](https://github.com/jupyterhub/jupyterhub)
 
+[![Latest PyPI version](https://img.shields.io/pypi/v/jupyterhub?logo=pypi)](https://pypi.python.org/pypi/jupyterhub)
+[![Latest conda-forge version](https://img.shields.io/conda/vn/conda-forge/jupyterhub?logo=conda-forge)](https://www.npmjs.com/package/jupyterhub)
+[![Documentation build status](https://img.shields.io/readthedocs/jupyterhub?logo=read-the-docs)](https://jupyterhub.readthedocs.org/en/latest/)
+[![GitHub Workflow Status - Test](https://img.shields.io/github/workflow/status/jupyterhub/jupyterhub/Test?logo=github&label=tests)](https://github.com/jupyterhub/jupyterhub/actions)
+[![DockerHub build status](https://img.shields.io/docker/build/jupyterhub/jupyterhub?logo=docker&label=build)](https://hub.docker.com/r/jupyterhub/jupyterhub/tags)
+[![CircleCI build status](https://img.shields.io/circleci/build/github/jupyterhub/jupyterhub?logo=circleci)](https://circleci.com/gh/jupyterhub/jupyterhub)<!-- CircleCI Token: b5b65862eb2617b9a8d39e79340b0a6b816da8cc -->
+[![Test coverage of code](https://codecov.io/gh/jupyterhub/jupyterhub/branch/master/graph/badge.svg)](https://codecov.io/gh/jupyterhub/jupyterhub)
+[![GitHub](https://img.shields.io/badge/issue_tracking-github-blue?logo=github)](https://github.com/jupyterhub/jupyterhub/issues)
+[![Discourse](https://img.shields.io/badge/help_forum-discourse-blue?logo=discourse)](https://discourse.jupyter.org/c/jupyterhub)
+[![Gitter](https://img.shields.io/badge/social_chat-gitter-blue?logo=gitter)](https://gitter.im/jupyterhub/jupyterhub)
 
-# How to install Globus Connect Personal
+With [JupyterHub](https://jupyterhub.readthedocs.io) you can create a
+**multi-user Hub** which spawns, manages, and proxies multiple instances of the
+single-user [Jupyter notebook](https://jupyter-notebook.readthedocs.io)
+server.
 
-[Introduction](introduction to Globus Personal connect)
-[how to install](How to install Globus Personal Connect)
+[Project Jupyter](https://jupyter.org) created JupyterHub to support many
+users. The Hub can offer notebook servers to a class of students, a corporate
+data science workgroup, a scientific research project, or a high performance
+computing group.
 
-### Introduction to Globus Connect Personal
+## Technical overview
 
-* Globus Connect is easy-to-install, pre-configured software that turns your laptop, server, cluster or other local resource into a Globus endpoint.
+Three main actors make up JupyterHub:
 
-* There are two versions of Globus Connect, one for use with personal machines such as your laptop, and another for use with server-class machines such as campus computing clusters and lab servers.
+- multi-user **Hub** (tornado process)
+- configurable http **proxy** (node-http-proxy)
+- multiple **single-user Jupyter notebook servers** (Python/Jupyter/tornado)
 
-* Use Globus Connect Personal to enable file transfer to and from your personal machine (laptop or desktop.) A Globus Connect Personal endpoint is intended to be used only by a single user.
+Basic principles for operation are:
 
-### How to Install Globus Personal Connect
+- Hub launches a proxy.
+- Proxy forwards all requests to Hub by default.
+- Hub handles login, and spawns single-user servers on demand.
+- Hub configures proxy to forward url prefixes to the single-user notebook
+  servers.
 
-* [Globus connect personel](https://tinyurl.com/a5zat3x3) is the log in page where we can sign in using the university or organization log in details.
+JupyterHub also provides a
+[REST API](http://petstore.swagger.io/?url=https://raw.githubusercontent.com/jupyter/jupyterhub/master/docs/rest-api.yml#/default)
+for administration of the Hub and its users.
 
-* If you are trying to access the website using organization information, then select the organization details from the drop-down menu.
+## Installation
 
+### Check prerequisites
 
-![img](https://i.imgur.com/jgeG3de.png)
+- A Linux/Unix based system
+- [Python](https://www.python.org/downloads/) 3.5 or greater
+- [nodejs/npm](https://www.npmjs.com/)
 
+  - If you are using **`conda`**, the nodejs and npm dependencies will be installed for
+    you by conda.
 
-* After choosing the organization and clicking enter, the page redirects to organization log in page.
+  - If you are using **`pip`**, install a recent version of
+    [nodejs/npm](https://docs.npmjs.com/getting-started/installing-node).
+    For example, install it on Linux (Debian/Ubuntu) using:
 
-* Here, you are expected to enter the organization credentials.
+    ```
+    sudo apt-get install npm nodejs-legacy
+    ```
 
-* When you click sign in, it validates the credentials and lets you in!
+    The `nodejs-legacy` package installs the `node` executable and is currently
+    required for npm to work on Debian/Ubuntu.
 
-![img](https://i.imgur.com/mlX90px.png)
+- If using the default PAM Authenticator, a [pluggable authentication module (PAM)](https://en.wikipedia.org/wiki/Pluggable_authentication_module).
+- TLS certificate and key for HTTPS communication
+- Domain name
 
-If you are a windows user, then click “Download Globus for Windows” otherwise click on “show me other supported operating systems.”
+### Install packages
 
-![img](https://i.imgur.com/ggYPZW7.png)
+#### Using `conda`
 
-* As we are installing Globus directly from the website, then there shouldn’t be any problem.
+To install JupyterHub along with its dependencies including nodejs/npm:
 
-* Sometimes windows defender stops the user from downloading as it doesn’t recognize the application.
+```bash
+conda install -c conda-forge jupyterhub
+```
 
-* If your system encounters any problem as such, click on “more info.”
+If you plan to run notebook servers locally, install the Jupyter notebook
+or JupyterLab:
 
-![img](https://i.imgur.com/ro6mCVB.png)
+```bash
+conda install notebook
+conda install jupyterlab
+```
 
-By clicking on ‘Run anyway’ the system starts downloading the application.
+#### Using `pip`
 
-![img](https://i.imgur.com/gBUqkVY.png)
+JupyterHub can be installed with `pip`, and the proxy with `npm`:
 
-* After the application is installed, the setting up page sets up the application for the user.
+```bash
+npm install -g configurable-http-proxy
+python3 -m pip install jupyterhub
+```
 
-* By clicking finish, the application is successfully installed.
+If you plan to run notebook servers locally, you will need to install the
+[Jupyter notebook](https://jupyter.readthedocs.io/en/latest/install.html)
+package:
 
-![img](https://i.imgur.com/c3yGYNU.png)
+    python3 -m pip install --upgrade notebook
 
-After the successful installation of the application, the Globus Connect Personal Setup shows a pop-up to Log in to the system.
+### Run the Hub server
 
-![img](https://i.imgur.com/aquGpkm.png)
+To start the Hub server, run the command:
 
-After Log-in, it provides a future reference name. If you would like to change the name, rename and click on the ‘Allow’ if you agree to the privacy policy and terms of service.
+    jupyterhub
 
-![img](https://i.imgur.com/314vDDb.png)
+Visit `https://localhost:8000` in your browser, and sign in with your unix
+PAM credentials.
 
-* _This is the most important step when setting up the application for you_ .
+_Note_: To allow multiple users to sign into the server, you will need to
+run the `jupyterhub` command as a _privileged user_, such as root.
+The [wiki](https://github.com/jupyterhub/jupyterhub/wiki/Using-sudo-to-run-JupyterHub-without-root-privileges)
+describes how to run the server as a _less privileged user_, which requires
+more configuration of the system.
 
-* Since we logged in using the organization log in details, it automatically assigns the owner identity to the registered email address.
+## Configuration
 
-* _*Collection Name*_ : This field allows the user to name their collection. It can be anything the user can identify the folder for later uses.
+The [Getting Started](https://jupyterhub.readthedocs.io/en/latest/getting-started/index.html) section of the
+documentation explains the common steps in setting up JupyterHub.
 
-* _*Description*_ : The description helps the user to describe their collection.
+The [**JupyterHub tutorial**](https://github.com/jupyterhub/jupyterhub-tutorial)
+provides an in-depth video and sample configurations of JupyterHub.
 
-* _*High Assurance*_ : Unless the user has access to sensitive information like patient records or something, kindly leave the field unchecked. If we click on the high assurance, then the user won't be able to share the information. Afterall, the application helps to exchange information between client and server.
+### Create a configuration file
 
-* After all the fields are filled, click on save.
+To generate a default config file with settings and descriptions:
 
-![img](https://i.imgur.com/AFD3e4o.png)
+    jupyterhub --generate-config
 
-* After you click on save, then this message pops up, “Setup successful.”
+### Start the Hub
 
-* You may click on any of the links below or both. This takes the user to the website.
+To start the Hub on a specific url and port `10.0.1.2:443` with **https**:
 
-* Then click on exit setup.
+    jupyterhub --ip 10.0.1.2 --port 443 --ssl-key my_ssl.key --ssl-cert my_ssl.cert
 
-* When the user clicks on exit setup, then it means, Globus personal is successfully connected and is set up on the personal computer for further use.
+### Authenticators
 
-![img](https://i.imgur.com/Rv5NjsE.png)
+| Authenticator                                                                | Description                                       |
+| ---------------------------------------------------------------------------- | ------------------------------------------------- |
+| PAMAuthenticator                                                             | Default, built-in authenticator                   |
+| [OAuthenticator](https://github.com/jupyterhub/oauthenticator)               | OAuth + JupyterHub Authenticator = OAuthenticator |
+| [ldapauthenticator](https://github.com/jupyterhub/ldapauthenticator)         | Simple LDAP Authenticator Plugin for JupyterHub   |
+| [kerberosauthenticator](https://github.com/jupyterhub/kerberosauthenticator) | Kerberos Authenticator Plugin for JupyterHub      |
 
-* This is the landing page if the user clicks on the links provided in the previous section.
+### Spawners
 
-* Oops! All the documents in the Documents folder on my personal laptop are being shared on globus and will be accessible to other users.
+| Spawner                                                        | Description                                                                |
+| -------------------------------------------------------------- | -------------------------------------------------------------------------- |
+| LocalProcessSpawner                                            | Default, built-in spawner starts single-user servers as local processes    |
+| [dockerspawner](https://github.com/jupyterhub/dockerspawner)   | Spawn single-user servers in Docker containers                             |
+| [kubespawner](https://github.com/jupyterhub/kubespawner)       | Kubernetes spawner for JupyterHub                                          |
+| [sudospawner](https://github.com/jupyterhub/sudospawner)       | Spawn single-user servers without being root                               |
+| [systemdspawner](https://github.com/jupyterhub/systemdspawner) | Spawn single-user notebook servers using systemd                           |
+| [batchspawner](https://github.com/jupyterhub/batchspawner)     | Designed for clusters using batch scheduling software                      |
+| [yarnspawner](https://github.com/jupyterhub/yarnspawner)       | Spawn single-user notebook servers distributed on a Hadoop cluster         |
+| [wrapspawner](https://github.com/jupyterhub/wrapspawner)       | WrapSpawner and ProfilesSpawner enabling runtime configuration of spawners |
 
-* Hence we need to change the default folder that only those files need to be shared with other users.
+## Docker
 
-![img](https://i.imgur.com/qnbhTln.png)
+A starter [**docker image for JupyterHub**](https://hub.docker.com/r/jupyterhub/jupyterhub/)
+gives a baseline deployment of JupyterHub using Docker.
 
-To change the default directory, on tool bar, check for the Globus “g” logo and right click on the logo button.
+**Important:** This `jupyterhub/jupyterhub` image contains only the Hub itself,
+with no configuration. In general, one needs to make a derivative image, with
+at least a `jupyterhub_config.py` setting up an Authenticator and/or a Spawner.
+To run the single-user servers, which may be on the same system as the Hub or
+not, Jupyter Notebook version 4 or greater must be installed.
 
-![img](https://i.imgur.com/DC39xAm.png)
+The JupyterHub docker image can be started with the following command:
 
-By right clicking on the logo, a list of different functions appear next to it. On the list, check for ‘options…’ and click on it.
+    docker run -p 8000:8000 -d --name jupyterhub jupyterhub/jupyterhub jupyterhub
 
-![img](https://i.imgur.com/FV5teDy.png)
+This command will create a container named `jupyterhub` that you can
+**stop and resume** with `docker stop/start`.
 
-* You may create a new folder for saving all the information relating related to Globus.
+The Hub service will be listening on all interfaces at port 8000, which makes
+this a good choice for **testing JupyterHub on your desktop or laptop**.
 
-* After you land into the folder, then click choose.
+If you want to run docker on a computer that has a public IP then you should
+(as in MUST) **secure it with ssl** by adding ssl options to your docker
+configuration or by using a ssl enabled proxy.
 
-* Now, we have successfully saved, the default folder.
+[Mounting volumes](https://docs.docker.com/engine/admin/volumes/volumes/) will
+allow you to **store data outside the docker image (host system) so it will be persistent**, even when you start
+a new image.
 
-* Beware – Just by setting up the default folder doesn’t remove the access to “documents” folder. Hence you need to remove the Documents folder.
+The command `docker exec -it jupyterhub bash` will spawn a root shell in your docker
+container. You can **use the root shell to create system users in the container**.
+These accounts will be used for authentication in JupyterHub's default configuration.
 
-![img](https://i.imgur.com/U7QTE0Y.png)
+## Contributing
 
-* You may give access to the default folder as you wish. But it is preferred to select “writable” instead of  both “writable and sharable.”
+If you would like to contribute to the project, please read our
+[contributor documentation](http://jupyter.readthedocs.io/en/latest/contributor/content-contributor.html)
+and the [`CONTRIBUTING.md`](CONTRIBUTING.md). The `CONTRIBUTING.md` file
+explains how to set up a development installation, how to run the test suite,
+and how to contribute to documentation.
 
-* You may click on “Save” to save these changes.
+For a high-level view of the vision and next directions of the project, see the
+[JupyterHub community roadmap](docs/source/contributing/roadmap.md).
 
-_*Note*_ : Remove the previous default folder by clicking on the folder and tapping on the (-) option. It will remove the folder from the accessible folder list.
+### A note about platform support
 
-![img](https://i.imgur.com/68OlVDz.png)
+JupyterHub is supported on Linux/Unix based systems.
 
-* The path now is changes to the default path the user has specified.
+JupyterHub officially **does not** support Windows. You may be able to use
+JupyterHub on Windows if you use a Spawner and Authenticator that work on
+Windows, but the JupyterHub defaults will not. Bugs reported on Windows will not
+be accepted, and the test suite will not run on Windows. Small patches that fix
+minor Windows compatibility issues (such as basic installation) **may** be accepted,
+however. For Windows-based systems, we would recommend running JupyterHub in a
+docker container or Linux VM.
 
-* All the files of that folder now being shared on Globus.
+[Additional Reference:](http://www.tornadoweb.org/en/stable/#installation) Tornado's documentation on Windows platform support
 
-![img](https://i.imgur.com/WQouhAD.png)
+## License
 
-These are the steps involved in installing and setting up the Globus Connect Personal.
+We use a shared copyright model that enables all contributors to maintain the
+copyright on their contributions.
 
+All code is licensed under the terms of the revised BSD license.
 
+## Help and resources
 
+We encourage you to ask questions on the [Jupyter mailing list](https://groups.google.com/forum/#!forum/jupyter).
+To participate in development discussions or get help, talk with us on
+our JupyterHub [Gitter](https://gitter.im/jupyterhub/jupyterhub) channel.
 
-For FAQs: [Click here](https://tinyurl.com/w36dwkfs)
+- [Reporting Issues](https://github.com/jupyterhub/jupyterhub/issues)
+- [JupyterHub tutorial](https://github.com/jupyterhub/jupyterhub-tutorial)
+- [Documentation for JupyterHub](https://jupyterhub.readthedocs.io/en/latest/) | [PDF (latest)](https://media.readthedocs.org/pdf/jupyterhub/latest/jupyterhub.pdf) | [PDF (stable)](https://media.readthedocs.org/pdf/jupyterhub/stable/jupyterhub.pdf)
+- [Documentation for JupyterHub's REST API](http://petstore.swagger.io/?url=https://raw.githubusercontent.com/jupyter/jupyterhub/master/docs/rest-api.yml#/default)
+- [Documentation for Project Jupyter](http://jupyter.readthedocs.io/en/latest/index.html) | [PDF](https://media.readthedocs.org/pdf/jupyter/latest/jupyter.pdf)
+- [Project Jupyter website](https://jupyter.org)
+- [Project Jupyter community](https://jupyter.org/community)
+
+JupyterHub follows the Jupyter [Community Guides](https://jupyter.readthedocs.io/en/latest/community/content-community.html).
+
+---
+
+**[Technical Overview](#technical-overview)** |
+**[Installation](#installation)** |
+**[Configuration](#configuration)** |
+**[Docker](#docker)** |
+**[Contributing](#contributing)** |
+**[License](#license)** |
+**[Help and Resources](#help-and-resources)**
